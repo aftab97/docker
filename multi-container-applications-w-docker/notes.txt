@@ -1,0 +1,21 @@
+Scenario:
+
+Network:
+docker create network container-network
+
+DB:
+must persist
+access should be limited
+docker run --name mongo-container -v data:/data/db --rm -d --network container-network mongo
+
+Backend:
+Data must persist
+Live source can be updated
+docker build -t backend-app-node .
+docker run --name backend-app --rm -d -p 3001:3001 -v /Users/aftab/Desktop/coding/docker/multi-container-applications-w-docker/fullstack-app/backend:/app -v /app/node_modules -v logs:/app/logs--network container-network backend-app-node
+
+Frontend:
+Live Source Code can be updated (bind mount required)
+-v "path/App" this will be so that we can change the source code
+docker build -t frontend-app-node:w-volume .
+docker run --network container-network -i -d -p 3000:3000 --rm --name frontend-app -v /Users/aftab/Desktop/coding/docker/multi-container-applications-w-docker/fullstack-app/frontend/src:/app/src frontend-app-node:w-volume

@@ -1,0 +1,46 @@
+# can go to website to see latest version
+version: "3.8"
+
+services:
+  mongo-container:
+    # it can be an image you created as well
+    image: "mongo"
+    volumes:
+      # this is the same as -v data:/data/db (bind mount)
+      - data:/data/db
+    # environment:
+    #   - MONGO_INITDB_ROOT_USERNAME=Aftab
+    # env_file:
+    #   - ./env/mongo.env
+  backend:
+    build: ./backend
+    # build:
+    #   context: ./backend
+    #   dockerfile: Dockerfile
+    #   args:
+    #     - some-arg=1
+    ports:
+      - "80:80"
+    volumes:
+      - logs:/app/logs
+      # dont need to put full file path with compose (/users/aftab...)
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      - mongo-container
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/src:/app/src
+    # the same as -it
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
+
+# named volumes need to be added at end of file
+volumes:
+  data:
+  logs:

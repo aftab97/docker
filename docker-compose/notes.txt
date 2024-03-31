@@ -1,0 +1,9 @@
+docker compose means you no longer need to run huge cmds to run docker files
+
+dont need to specify network because docker automatically creates its own network
+
+docker-compose up -d 
+-d = detached mode
+
+docker-compose down //removes all the containers but NOT volumes
+docker-compost --build //forces images to be rebuilt

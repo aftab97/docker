@@ -1,0 +1,12 @@
+Utility Containers:
+
+Can be used to use packages without having to install on your own machine
+Use Case:
+    I dont have node on local machine but can create a container with it
+
+if you want to run commands after the container has run you can use:
+    docker exec -it {container_name} {cmd}
+    docker exec -t my_container npm init
+
+
+docker run node -

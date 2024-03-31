@@ -1,0 +1,29 @@
+# This will be multistage build for prod
+
+FROM --platform=amd64 node:14-alpine as build
+
+WORKDIR /app
+
+COPY package.json . 
+
+RUN npm install
+
+COPY . .
+
+EXPOSE 3000
+
+RUN npm run build
+
+# this causes a multistage build
+# we are doing this because we no longer need node
+FROM --platform=amd64 nginx:stable-alpine
+
+# copys from alias we gave (build): /app/build to to NGINX reverse proxy server
+COPY --from=build /app/build usr/share/nginx/html
+
+EXPOSE 80
+
+# requirements from docs
+CMD [ "nginx" , "-g" , "daemon off;" ]
+
+# docker build -f Dockerfile.prod -t demo-app-frontend-repo:for-ecs .

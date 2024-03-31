@@ -1,0 +1,6 @@
+Use case scenario:
+Copying log file from container to local machine
+
+CMD: cp test.txt random_container:/test
+
+This will add to a new folder in container (if not created will create), called /test

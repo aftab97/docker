@@ -1,0 +1,31 @@
+ "mongodb://host.docker.internal:27017/swfavorites" --this accesses the localhost from your machine not the container
+
+docker inspect [container name] --you can find ip/other info of container
+
+Network:
+To make below code work you need to create a network:
+    docker network create favorites-net
+    docker network ls
+    docker run --network favorites-net
+by using the --network flag all containers can communicate with each other and IPs are automatically resolved
+
+mongodb is the name of the container which can be used as the host
+  "mongodb://mongodb:27017/swfavorites",
+
+Docker Network Drivers:
+They influence the behavior of the Network
+The "bridge" driver provides the behaviour in which containers can communicate with eachother with the container names
+by using "docker network create --driver bridge my-network"
+however not necessary because the bridge driver is the default
+
+
+Docker also supports these alternative drivers - though you will use the "bridge" driver in most cases:
+    - host: For standalone containers, isolation between container and host system is removed (i.e. they share localhost as a network)
+
+    - overlay: Multiple Docker daemons (i.e. Docker running on different machines) are able to connect with each other. Only works in "Swarm" mode which is a dated / almost deprecated way of connecting multiple containers
+
+    - macvlan: You can set a custom MAC address to a container - this address can then be used for communication with that container
+
+    - none: All networking is disabled.
+
+    - Third-party plugins: You can install third-party plugins which then may add all kinds of behaviors and functionalities

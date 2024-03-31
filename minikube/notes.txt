@@ -1,0 +1,5 @@
+This starts a single virtual machine on a Windows, MacOS or Linux and installs a Kubernetes 
+cluster into it. It's generally used by developers to quickly start-up a cluster on their 
+laptops or desktops for development and testing purposes.
+
+--- //defined another yml config (you can have multiple in one file)

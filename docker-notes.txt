@@ -1,0 +1,14 @@
+node(name):14(tag)
+
+DockerFile:
+you have to build it (docker build)
+may require surrounding files / folders
+
+Share:
+via Docker Hub or Private Registry
+(docker push/pull IMAGE_NAME)
+
+Why Docker?
+Allows you to build containers which are standalone and isolated
+So no problems which different OS and package versions etc..
+

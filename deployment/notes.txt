@@ -1,0 +1,17 @@
+Possible Soloutions:
+
+Push & Pull Image Approach:
+Install Docker on remote host. Push and Pull image, run container based on remote host/machine (aws, azure, gcp)
+
+AWS:
+1. launch EC2 instance
+2. configure security group
+3. connect to instance (SSH), install Docker and run container
+
+
+Changes Required for Prod:
+No longer use bind mounts -> use instead COPY
+
+Changes Regquired for ECS Prod:
+For env variables use a .env key:value to assign
+Also for networking: can no longer use service name instead use localhost pass in via process.enb.MONGODB_URL

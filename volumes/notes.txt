@@ -1,0 +1,38 @@
+Allow you to persist data. They are folder on your host machine hard drive which are mounted into containers.
+They persist data even if container shuts down.
+
+example:
+
+VOLUME [ "/app/feedback" ]
+
+Two types of volumes:
+Volumes (anonymous v or named v) OR - managed by Docker
+    - Anonymous: when container shutdown the volume is destroyed (because volume is recreated when started)
+        - -v /app/node_modules
+        - OR VOLUME ["/app/node_modules]
+    - Named: when container shutdown the volume will persist but dont need to directly change the data
+        - CMD: docker run -p 3000:80 -d --name feedback-app -v feedback:/app/feedback --rm feedback-node:w-volume 
+        - -v feedback:/app/feedback //will be called feedback and stored in container app/feedback folder
+Bind Mounts (managed by me)
+    - You define a folder / path to your host machine
+    - Use this only for development, for prod use COPY
+        - You will need to give permission to allow for COPY (or read / write)
+        - CMD: chown -
+    - Great for pesistant editable data by you (e.g. source code)
+    - CMD: docker run -p 3000:80 -d --rm --name feedback-app -v feedback:/app/feedback -v "/Users/aftab/Desktop/coding/docker/data-volumes-01-starting-setup:/app" feedback-node:w-volume
+
+docker volume ls //lists the volumes
+
+Adv concept:
+
+This is deleting our node_modules folder after npm i, because is being
+overwritten by our command below:
+    -v "/Users/aftab/Desktop/coding/docker/data-volumes-01-starting-setup:/app"
+
+To tackle situation we:
+    -v /app/node_modules
+This is the longer path below so our folder remains when the bind mount is copied over to container
+
+:ro //stops docker from writting into folder
+
+docker volume ls //would not show bind mount volumes because is not managed by docker

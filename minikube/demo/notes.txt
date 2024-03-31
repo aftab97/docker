@@ -1,0 +1,14 @@
+this will create a demo cluster with mongodb and a web app
+
+in mongo-secret: in data -> user/pass they have to be base64 encoded
+can do this by going terminal: echo -n mongouser | base64
+
+mongo.yaml (deplyment and service in 1 file) = they belong together
+
+labels are key/value pairs that are attached to k8 resources
+e.g "release":"stable" / "env":"production:
+
+statefulset is better for replicas and scaling
+
+To get IP and see if webapp is running:
+kubectl get node -o wide

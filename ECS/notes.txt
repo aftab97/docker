@@ -1,0 +1,29 @@
+Two ways:
+    1. Fargate (serverless)
+    2. EC2 
+
+
+Fargate:
+Only creates server when needed (comparision to EC2 always running)
+
+By using revisions in ECS > Task Revision
+
+Changes Required for Prod:
+No longer use bind mounts -> use instead COPY
+
+Changes Required for ECS Prod:
+For env variables use a .env key:value to assign
+Also for networking: 
+can no longer use service name instead use localhost pass in via process.enb.MONGODB_URL
+HOWEVER for frontend:
+you cant use localhost as it refers to users machine instead of server as it is being served by inside the 
+container but instead the browser of end user
+if fetch is done from URL within same container then you can use same URL so can do 
+X localhost/goals -> /goals
+
+NOTE:
+When using ALB with multiple containers if GET to (/) path gives back 400 then healthcheck fails and the ALB does not deploy
+to avoid change / to /{working-path} e.g. /goals
+
+EFS:
+To use EFS with fargate you create security group which the NFS Inbound Traffic to connect with the Security group used for cluster 
